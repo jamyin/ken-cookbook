@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper  namespace="com.ssic.cookbook.manager.mapper.IndependentFixingsExMapper">
+<select id="findAllIntelligentProduct"   resultType="com.ssic.cookbook.manager.dto.FixingsResultDto"  parameterType="com.ssic.cookbook.manager.dto.FixingsResultDto"> 
+select 
+
+c.fixings_name   as fixingsName
+
+ FROM  t_cb_fixings_result a  ,t_cb_intelligent_fixings b ,t_cb_fixings_master c 
+ where c.id=b.fixings_master_id AND c.stat=1 AND a.fixings_id=b.id and a.fixings_type=2 AND a.stat=1 AND b.stat=1 
+
+ <if test="FixingsResultDto.mealName !=null and  FixingsResultDto.mealName !=''">
+   and  c.fixings_name=#{FixingsResultDto.mealName} 
+ </if>
+ 
+ 
+  <if test=" FixingsResultDto.totalCostOperator != null and  FixingsResultDto.totalCostOperator !=''  and FixingsResultDto.totalCost!=null  and  FixingsResultDto.totalCost!=''">
+ 	and b.total_cost   ${FixingsResultDto.totalCostOperator}  #{FixingsResultDto.totalCost}
+ 
+ </if>
+ <if test="FixingsResultDto.totalFixedPriceOperator!=null and  FixingsResultDto.totalFixedPriceOperator!=''  and FixingsResultDto.totalFixedPrice!=null and  FixingsResultDto.totalFixedPrice!=''">
+ 		
+ and  b.total_fixed_price   ${FixingsResultDto.totalFixedPriceOperator}    #{FixingsResultDto.totalFixedPrice}
+			
+ </if>
+ limit #{FixingsResultDto.star},#{FixingsResultDto.end} 
+ ;
+  	
+</select>
+
+
+
+<select id="findAllIntelligentProductType"   resultType="com.ssic.cookbook.manager.dto.FixingsResultDto"  parameterType="com.ssic.cookbook.manager.dto.FixingsResultDto"> 
+
+ select NAME as typeName,
+ 
+   id as  categoryId  from   t_cb_product_category
+   
+   where  stat=1;
+</select>
+
+  <select id="findCount"  resultType="int" >
+  
+  SELECT
+	count(1)
+FROM
+	t_cb_fixings_result a,
+	t_cb_intelligent_fixings b
+	,t_cb_fixings_master c 
+WHERE
+	a.fixings_id = b.id
+AND	c.id=b.fixings_master_id
+AND a.fixings_type = 2
+ AND a.stat=1
+ AND b.stat=1
+ AND c.stat=1;
+  
+  
+  
+  
+  </select>
+<select id="findAllIntelligentProductName"   resultType="com.ssic.cookbook.manager.dto.FixingsResultDto"  parameterType="com.ssic.cookbook.manager.dto.FixingsResultDto"> 
+
+select  
+ distinct 
+  a.product_category_id as productCategoryId ,
+(select c.`name` from t_cb_product c where c.id=b.product_id AND c.stat=1) as productName,
+ (select d.`name` from t_cb_product_category d WHERE d.stat=1 AND d.id=(select c.product_category_id from t_cb_product c where c.id=b.product_id)) as type
+from  t_cb_fixings_result_type a LEFT JOIN t_cb_fixings_result_type_product b on a.id=b.result_type_id 
+where a.stat=1  AND b.stat=1 ;
+
+</select>
+
+<update id="deleteIntelligent"   parameterType="com.ssic.cookbook.manager.dto.FixingsResultDto">
+ update  t_cb_fixings_master  as a set stat=0 where   a.fixings_name=#{FixingsResultDto.fixingsName}
+
+</update>
+
+
+
+
+
+
+
+
+
+
+</mapper>

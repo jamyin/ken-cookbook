@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssic.cookbook.manager.mapper.MaterialExMapper">
+
+ <select id="findAll" parameterType="com.ssic.cookbook.manager.dto.MaterialDto" resultType="com.ssic.cookbook.manager.dto.MaterialDto">
+ SELECT
+	a.id as id,
+	a.img_url as imgUrl,
+	a.NAME as name,
+	a.type as type,
+  (select b.param_name from t_cb_param_config b where a.type=b.param_id and b.param_type = 'material_type') as typeName ,
+	a.cost as cost,
+	a.big_category_id as bigCategoryId,
+	a.brand_id as brandId,
+  c.`name` as bigCategoryName,
+  d.`name` as brandName,
+	a.is_sensitive_material as isSensitiveMaterial,
+  (select b.param_name from t_cb_param_config b where a.is_sensitive_material=b.param_id and b.param_type = 'is_sensitive_material' ) as isSensitiveName,
+	a.remark as remark,
+	a.create_time as createTime,
+	a.last_update_time as lastUpdateTime,
+	a.stat as stat
+FROM
+	t_cb_material a 
+	LEFT JOIN
+	 t_cb_material_big_category c 
+	 on a.big_category_id=c.id 
+    LEFT JOIN t_cb_brand d 
+    on a.brand_id=d.id
+	WHERE
+	a.stat = 1
+	<include refid="whererInfo"></include>
+	order by a.create_time desc limit #{materialDto.limitStar},#{materialDto.limitEnd}
+ </select>
+
+ <select id="findCount" parameterType="com.ssic.cookbook.manager.dto.MaterialDto" resultType="int">
+  SELECT
+	count(*)
+FROM
+	t_cb_material a LEFT JOIN t_cb_material_big_category c on a.big_category_id=c.id 
+    LEFT JOIN t_cb_brand d on a.brand_id=d.id
+WHERE
+	a.stat = 1
+	<include refid="whererInfo"></include>
+ </select>
+
+
+ <sql id="whererInfo">
+    <if test="materialDto.name !=null and materialDto.name != '' ">
+	 and a.name = #{materialDto.name}
+	</if>
+	<if test="materialDto.bigCategoryId !=null and materialDto.bigCategoryId != '' ">
+	 and a.big_category_id = #{materialDto.bigCategoryId}
+	</if>
+	<if test="materialDto.brandId !=null and materialDto.brandId != '' ">
+	 and a.brand_id = #{materialDto.brandId}
+	</if>
+	<if test="materialDto.type !=null ">
+	 and a.type = #{materialDto.type}
+	</if>
+	<if test="materialDto.isSensitiveMaterial!=null ">
+	 and a.is_sensitive_material = #{materialDto.isSensitiveMaterial}
+	</if>
+	<if test="materialDto.cost !=null and materialDto.cost != '' ">
+	 and a.cost = #{materialDto.cost}
+	</if>
+ </sql>
+ 
+   <select id="findNuByMid" resultType="com.ssic.cookbook.manager.dto.NutritionDto">
+   SELECT b.param_id as id,
+	b.`name` as name,
+	b.content as content,
+	b.unit as unit
+FROM
+	t_cb_material_nutrition a,
+	t_cb_nutrition b
+WHERE
+	a.nutrition_id = b.id and a.stat=1 and b.stat=1 
+AND a.material_id = #{mid}
+   </select>
+   
+   <update id="deleteMaNuByMid">
+    update t_cb_material_nutrition a set a.stat=0 where a.material_id=#{mid}
+   </update>
+ 
+
+</mapper>

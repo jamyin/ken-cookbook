@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssic.cookbook.manager.mapper.NutritionExMapper">
+
+   <update id="updateNutrByPid" parameterType="com.ssic.cookbook.manager.dto.NutritionDto">
+       update t_cb_nutrition a set a.`name` = #{nutritionDto.name} ,a.unit=#{nutritionDto.unit}  where a.param_id = #{nutritionDto.paramId}
+   </update>
+
+</mapper>

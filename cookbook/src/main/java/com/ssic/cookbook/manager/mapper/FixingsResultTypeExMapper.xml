@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="FixingsResultTypeExMapper" >
+	 <select id="QueryFixingsResult" parameterType="page" resultType="pd">
+  		SELECT
+			t1.product_id AS pid, -- '成品菜的ID'
+			t2.meal_type AS mtype,-- '午餐或晚餐',
+			t2.fixings_time AS ftime, -- '配菜时间',
+			t4.`name`  AS typename,-- '类别名称',
+			t3.`name` AS  pname,-- '成品菜名称',
+			t5.material_weight AS mweight,-- '原料克重',
+			t6.`name` AS materialname,
+			t7.`name` AS nuname,-- '原料营养名称',
+			t7.content AS content,-- '原料营养含量',
+			t7.unit AS unit,-- '营养单位'
+			t3.single_cost AS singleCost,
+			t3.each_pricing  AS eachPricing
+		FROM
+			t_cb_fixings_result_type_product t1,
+			t_cb_fixings_result_type t2,
+			t_cb_product t3,
+			t_cb_product_category t4,
+			t_cb_product_material t5,
+			t_cb_material t6,
+			t_cb_nutrition t7,
+			t_cb_material_nutrition t8
+		WHERE
+			t1.result_type_id = t2.id
+		AND t2.fixings_result_id = #{prid}
+		AND t1.product_id = t3.id
+		AND t3.product_category_id = t4.id
+		AND t3.id = t5.product_id
+		AND t5.material_id = t6.id
+		AND t6.id = t8.material_id
+		AND t8.nutrition_id = t7.id;
+	</select>
+</mapper>

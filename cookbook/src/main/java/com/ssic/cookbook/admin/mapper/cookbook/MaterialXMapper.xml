@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MaterialXMapper">
+	
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>  
+    
+    <select id="findByPage" parameterType="page" resultType="pd">
+    SELECT
+	id,
+	img_url,
+	`name`,
+	type,
+	cost,
+	big_category_id,
+	brand_id,
+	is_sensitive_material,
+	remark,
+	create_time,
+	last_update_time,
+	stat
+FROM
+	t_cb_material
+    </select>
+    
+    <select id="expExcelFindAll" parameterType="pd" resultType="pd" useCache="false">
+    	SELECT
+			t1.`name` AS mname,
+			t1.type,
+			t1.cost,
+			t2.`name` AS cname,
+			t3.`name` AS bname,
+			t1.is_sensitive_material,
+			t1.remark
+		FROM
+			t_cb_material t1,
+			t_cb_material_big_category t2,
+			t_cb_brand t3
+		WHERE
+			t1.big_category_id = t2.id
+		AND t1.brand_id = t3.id 
+		AND t1.stat = 1
+		<if test="name!=null and name!='' ">
+		 and t1.`name` = #{name}
+		</if>
+		ORDER BY
+			t1.create_time DESC
+		LIMIT 1500;
+    </select>
+    
+    
+</mapper>    

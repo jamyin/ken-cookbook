@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssic.cookbook.manager.mapper.IntelligentFixingsExMapper">
+
+ <select id="findIntelligentFixings" parameterType="com.ssic.cookbook.manager.dto.IntelligentFixingsDto" resultType="com.ssic.cookbook.manager.dto.IntelligentFixingsDto">
+	SELECT a.id,a.set_meal_name as setMealName,a.fixings_master_id as fixingsMasterId,a.lunch_count as lunchCount,a.dinner_count as dinnerCount,a.total_cost_operator as totalCostOperator,a.total_cost as totalCost,
+	a.total_fixed_price_operator as totalFixedPriceOperator,a.total_fixed_price as totalFixedPrice,a.is_sensitive_ingredients as isSensitiveIngredients,a.fixings_start_time as fixingsStartTime,a.fixings_end_time as fixingsEndTime,a.create_time as createTime,
+	a.last_update_time as lastUpdateTime,a.stat,b.fixings_name as fixingsName,b.fixings_type  as fixingsType  
+	FROM  t_cb_intelligent_fixings a  
+	LEFT JOIN t_cb_fixings_master b  
+	ON a.fixings_master_id = b.id   
+	WHERE 
+	<include refid="whererInfo"></include>
+	<include refid="Order_Clause"></include>
+ </select>
+ 
+  <select id="findCount"  resultType="java.lang.Integer">
+	SELECT count(*) 
+	FROM  t_cb_intelligent_fixings a  
+	LEFT JOIN t_cb_fixings_master b  
+	ON a.fixings_master_id = b.id   
+	WHERE 
+	<include refid="whererInfo"></include>
+ </select>
+
+ <sql id="whererInfo">
+    <if test="stat != null">
+			a.stat = #{stat} 
+	</if>
+   	<if test="id != null and id != ''">
+			and a.id = #{id} 
+	</if>
+ 	
+	<if test="fixingsType != null">
+			and b.fixings_type = #{fixingsType} 
+	</if>
+	<if test="setMealName != null and setMealName != ''">
+			and a.set_meal_name like "%"#{setMealName}"%" 
+	</if>
+ </sql>
+ 
+ <sql id="Order_Clause">
+	ORDER BY a.create_time DESC 
+	<if test="star != null and end != null and star >= 0">
+			LIMIT #{star},#{end};
+	</if>
+ </sql>
+ 
+</mapper>

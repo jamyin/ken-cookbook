@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProductXMapper">
+	
+    <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>  
+    <select id="expExcelFindAll" parameterType="pd" resultType="pd" useCache="false">
+    	SELECT
+			t1.`name` AS pname,
+			t2.`name` AS cname,
+			t3.`name` AS sname,
+			t4.`name` AS tname,
+			t5.`name` AS psname,
+			t7.`name` AS coname,
+			(SELECT GROUP_CONCAT(b.`name`) FROM t_cb_product_material a , t_cb_material b WHERE a.material_id = b.id AND a.product_id = t1.id AND a.stat = '1' AND b.stat = '1' GROUP BY a.product_id) AS mname,
+			t6.`name` AS pcname,
+			t1.single_cost,
+			t1.each_pricing,
+			t1.single_weight,
+			t1.demand_number,
+			t1.remark,
+			t1.total_cost
+		FROM
+			t_cb_product t1,
+			t_cb_product_category t2,
+			t_cb_product_style t3,
+			t_cb_product_taste t4,
+			t_cb_product_shape t5,
+			t_cb_product_cuisine t6,
+			t_cb_product_color t7
+		WHERE
+			t1.product_category_id = t2.id
+		AND t1.product_style_id = t3.id
+		AND t1.product_taste_id = t4.id
+		AND t1.product_shape_id = t5.id
+		AND t1.product_cuisine_id = t6.id
+		AND t1.product_color_id = t7.id
+		AND t1.stat = '1'
+		AND t2.stat = '1'
+		AND t3.stat = '1'
+		AND t4.stat = '1'
+		AND t5.stat = '1'
+		AND t6.stat = '1'
+		AND t7.stat = '1'
+		ORDER BY
+			t1.create_time DESC
+		LIMIT 1500;
+    </select>
+    
+    <select id="expProMethExcelFindAll" parameterType="pd" resultType="pd" useCache="false">
+    		SELECT
+				t.id AS id,
+				t.img_url AS imgUrl,
+				t.production_name AS productionName,
+				t.production_method AS productionMethod
+			FROM
+				t_cb_production_method t
+			WHERE t.stat = '1'
+			ORDER BY
+				t.create_time DESC
+			LIMIT 1500;
+    </select>
+    
+    
+</mapper>    

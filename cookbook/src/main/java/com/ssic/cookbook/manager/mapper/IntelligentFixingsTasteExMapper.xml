@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssic.cookbook.manager.mapper.IntelligentFixingsTasteExMapper">
+	 <insert id="addList" parameterType="java.util.List">  
+      INSERT INTO t_cb_intelligent_fixings_taste (id, taste_id,  
+	              intelligent_fixings_id, create_time, last_update_time, stat)
+      VALUES 
+     <foreach collection="list" item="item" index="index" separator="," >  
+        (#{item.id},#{item.tasteId},#{item.intelligentFixingsId},
+         #{item.createTime},#{item.lastUpdateTime},#{item.stat})  
+    </foreach> 
+  </insert>  
+	
+</mapper> 
