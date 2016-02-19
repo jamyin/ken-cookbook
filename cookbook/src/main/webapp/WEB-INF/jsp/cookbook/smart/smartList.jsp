@@ -180,8 +180,9 @@
 		function add(){
 			top.jzts();
 			 var diag = new top.Dialog();
+			 //diag.ID="addSmartMethod";
 			 diag.Drag=true;
-			 diag.Title ="新增";
+			 diag.Title ="新增智能配菜";
 			 diag.URL = '<%=basePath%>smart/menuTypeShow.do';
 			 diag.Width = 350;
 			 diag.Height = 255;
@@ -191,9 +192,11 @@
 						 top.jzts();
 						 setTimeout("self.location=self.location",100);
 					 }else{
-						 //nextPage(${page.currentPage});
+						  //nextPage(${page.currentPage});
 					 }
 				}
+				//刷新当前面板
+				//search();
 				diag.close();
 			 };
 			 diag.show();
@@ -203,15 +206,17 @@
 		function editSmartMethod(id){
 			 top.jzts();
 			 var diag = new top.Dialog();
-			 //diag.ID="";
+			 diag.ID="editSmartMethod";
 			 diag.Drag=true;
-			 diag.Title ="编辑";
+			 diag.Title ="编辑智能配菜";
 			 diag.URL = '<%=basePath%>smart/toEditSmart.do?smartId='+id;
 			 diag.Width = 600;
 			 diag.Height = 755;
 			 diag.CancelEvent = function(){ //关闭事件
-					diag.close();					
-					<%-- location.href="<%=basePath%>/SmartionMethod/findAllSmartionMethod.do"; --%>
+				//刷新当前面板
+				search();
+				diag.close();					
+				<%-- location.href="<%=basePath%>/SmartionMethod/findAllSmartionMethod.do"; --%>
 			 };
 			 diag.show();
 		}		

@@ -39,9 +39,9 @@
 <body>
 	<div id="zhongxin">
 		<div>
-			名称：<input type="text" name="menuName" id="menuName"
+			<h2>名称：<input type="text" name="menuName" id="menuName"
 				value="${pd.menuName}" placeholder="这里输入配菜名称" title="配菜名称"
-				class="isnull" message="配菜名称不能为空" />
+				 class="isnull" message="配菜名称不能为空" /></h2>
 		</div>
 		<div>
 			<h3 style="text-align: center;color: pink">配菜方式</h3>
@@ -100,6 +100,8 @@
 				 diag.Width = 600;
 				 diag.Height = 755;
 				 diag.CancelEvent = function(){ //关闭事件
+					//刷新当前面板
+					//search();
 					diag.close();
 				 };
 				 diag.show();

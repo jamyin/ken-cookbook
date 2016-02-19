@@ -109,7 +109,7 @@
 				$(li).append(anchor);
 				var div = $('<div class="content" id="content'+i+'">');
 				$('#contents').append(div);
-				$('#m').append('<a style="line-height:39px;" href="javascript:void(0)">查看所有>></a>');
+				// $('#m').append('<a style="line-height:39px;" href="javascript:void(0)">查看所有>></a>');
 			}
 			
 			function renderValue(v, i) {
@@ -156,10 +156,10 @@
 				content.append('<h4>成本:</h4>');
 				var p = $('<div>');
 				p.append('<div class="uhu">'+
-						'<strong>单份成本&nbsp;:&nbsp;</strong><span>'+v["singleCost"]+'元/份</span>&nbsp;&nbsp;'+
+						'<strong>单份成本&nbsp;:&nbsp;</strong><span>'+v["singleCost"]/100+'元/份</span>&nbsp;&nbsp;'+
 						'<strong>单份定价&nbsp;:&nbsp;</strong><span>'+v["eachPricing"]+'元/份</span></div>'+
 						'<div class="uhu"><br>'+
-						'<strong>总成本&nbsp;:&nbsp;</strong><span>'+v["totalsingleCost"]+'元/份</span>&nbsp;&nbsp;'+
+						'<strong>总成本&nbsp;:&nbsp;</strong><span>'+v["totalsingleCost"]/100+'元/份</span>&nbsp;&nbsp;'+
 						'<strong>总定价&nbsp;:&nbsp;</strong><span>'+v["totaleachPricing"]+'元/份</span>'+
 						'</div>');
 				content.append(p);

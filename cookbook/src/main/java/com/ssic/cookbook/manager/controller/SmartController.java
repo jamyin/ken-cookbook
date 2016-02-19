@@ -786,13 +786,13 @@ public class SmartController extends BaseController {
 			if(mp != null){
 				NutritionsDto nd = mp.get(nuname);
 				if(nd != null){
-					nd.setContent(nd.getContent()+Integer.parseInt(pageData.get("content").toString()));
+					nd.setContent(nd.getContent()+(Integer.parseInt(pageData.get("content").toString())/100));
 					nd.setUnit(pageData.get("unit").toString());
 				}else{
 					NutritionsDto nd1 = new NutritionsDto();
 					nd1.setName(nuname);
 					nd1.setUnit(pageData.get("unit").toString());
-					nd1.setContent(Integer.parseInt(pageData.get("content").toString()));
+					nd1.setContent(Integer.parseInt(pageData.get("content").toString())/100);
 					mp.put(nuname,nd1);
 				}
 			}else{
@@ -800,7 +800,7 @@ public class SmartController extends BaseController {
 				NutritionsDto nd1 = new NutritionsDto();
 				nd1.setName(nuname);
 				nd1.setUnit(pageData.get("unit").toString());
-				nd1.setContent(Integer.parseInt(pageData.get("content").toString()));
+				nd1.setContent(Integer.parseInt(pageData.get("content").toString())/100);
 				mn.put(nuname,nd1);
 				map2.put(ftime, mn);
 			}
@@ -811,18 +811,18 @@ public class SmartController extends BaseController {
 			if(mpn != null){
 				NutritionsDto nd = mpn.get(materialname);
 				if(nd != null){
-					nd.setMweight(nd.getMweight()+Integer.parseInt(pageData.get("mweight").toString()));
+					nd.setMweight(nd.getMweight()+(Integer.parseInt(pageData.get("mweight").toString())/100));
 				}else{
 					NutritionsDto nd1 = new NutritionsDto();
 					nd1.setName(materialname);
-					nd1.setMweight(Integer.parseInt(pageData.get("mweight").toString()));
+					nd1.setMweight(Integer.parseInt(pageData.get("mweight").toString())/100);
 					mpn.put(materialname,nd1);
 				}
 			}else{
 				Map<String, NutritionsDto> m = new HashMap<String, NutritionsDto>();
 				NutritionsDto nd1 = new NutritionsDto();
 				nd1.setName(materialname);
-				nd1.setMweight(Integer.parseInt(pageData.get("mweight").toString()));
+				nd1.setMweight(Integer.parseInt(pageData.get("mweight").toString())/100);
 				m.put(materialname,nd1);
 				map4.put(ftime, m);
 			}

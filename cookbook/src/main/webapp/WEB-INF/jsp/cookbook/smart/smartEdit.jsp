@@ -962,17 +962,18 @@
 						//bootbox.alert(data.msg);
 					$("#toAfter").show();
 					$("#smartId").val(data.data);
-		        	bootbox.alert("修改智能配菜成功");
-				  
+		        	//bootbox.alert("修改智能配菜成功");
+		        	//alert("修改智能配菜成功");
+		        	//top.Dialog.getDialogById("editSmartMethod").close();
 					} else {
 						result=false;
 						//bootbox.alert(data.msg);
 						bootbox.alert("修改智能配菜失败");
 					}
-				if(result==true){
-				   //只有返回成功，才会关闭当前dialog;
-				 //top.Dialog.close();
-				}
+				 if(result==true){
+				    //只有返回成功，才会关闭当前dialog;
+				 top.Dialog.close();
+				} 
 	           }
 			  });
 		}

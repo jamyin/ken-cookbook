@@ -352,9 +352,9 @@
 						<hr>
 						<div align="center">
 					<!-- 	<a class="btn btn-big btn-primary" onclick="toBefore()" id="toBefore">上一步</a> -->
-						<a class="btn btn-big btn-danger" onclick="save()">配菜条件保存</a>
-						<a class="btn btn-big btn-danger" onclick="top.Dialog.close();">关闭</a>
-						<a class="btn btn-big btn-primary" onclick="toAfter()" style="display: none;" id="toAfter">下一步</a>
+						<a class="btn btn-big btn-danger" onclick="save()" id="save">配菜条件保存</a>
+						<!-- <a class="btn btn-big btn-danger" onclick="top.Dialog.close();">关闭</a> -->
+						<a class="btn btn-big btn-primary"  onclick="toAfter()" style="display: none;" id="toAfter">下一步</a>
 						</div>
 					</fieldset>
 
@@ -818,11 +818,11 @@
 	            //console.log(data);
 		        if (data.status == 200) {
 						//bootbox.alert(data.msg);
+					$("#save").hide();
 					$("#toAfter").show();
 					$("#smartId").val(data.data.smartId);
 					$("#productId").val(data.data.productId);
 		        	bootbox.alert("添加智能配菜成功");
-				  
 					} else {
 						result=false;
 						//bootbox.alert(data.msg);
