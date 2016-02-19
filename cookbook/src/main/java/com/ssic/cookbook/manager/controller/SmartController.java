@@ -669,7 +669,7 @@ public class SmartController extends BaseController {
 	 	dto.setLastUpdateTime(new Date());
 	 	SmartResultDto res = iIntelligentFixingsService.addSmart(dto);
     	 if(res == null){
- 	    	 dto.setStat(1); //逻辑删除1
+ 	    	 dto.setStat(1); //逻辑删除11
 	   	 	 iIntelligentFixingsService.update(dto);
     		 result.setStatus(500);
     		 result.setMessage("编辑智能配菜失败");
