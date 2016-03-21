@@ -80,7 +80,8 @@
 									<div class='hidden-phone visible-desktop btn-group'>
 										<a class='btn btn-mini btn-info' title="编辑" onclick="editSmartMethod('${smartList.id }');"><i class='icon-edit'></i></a>
 										<a class='btn btn-mini btn-danger' title="删除" onclick="delSmartMethod('${smartList.id }');"><i class='icon-trash'></i></a>
-									</div>
+										<a class='btn btn-mini btn-info' title="查询配菜结果" id="findResult" smartId="${smartList.id }" lunchCount="${smartList.lunchCount}" dinnerCount="${smartList.dinnerCount}" productId="${smartList.productId}">
+										<i class='icon-search'></i></a>
 								</td>
 							</tr>						
 						</c:forEach>
@@ -259,6 +260,34 @@
 					
 			});
 			
+			$("#findResult").on('click', function(){
+				 var id = $("#findResult").attr("smartId");
+				 var productId = $("#findResult").attr("productId");
+				 var lunchCount = $("#findResult").attr("lunchCount");
+				 var dinnerCount = $("#findResult").attr("dinnerCount");
+				 if(lunchCount == ""){
+					 lunchCount = null;
+				 }
+				 if(dinnerCount == ""){
+					 dinnerCount = null;
+				 }
+				 
+				 //console.log("id="+id+";productId="+productId+";lunchCount="+lunchCount+";dinnerCount="+dinnerCount);
+				 //debugger;
+				 var choose_diag = new top.Dialog();
+				 choose_diag.Drag=true;
+				 choose_diag.ID="product_display";
+				 choose_diag.Title ="成品菜";
+				 choose_diag.URL = '<%=basePath%>smart/menuResultListPage.do?pid=' + productId +'&lunchCount='+lunchCount +'&dinnerCount='+dinnerCount;
+				 choose_diag.Width = 535;
+				 choose_diag.Height = 585;
+				 choose_diag.CancelEvent = function(){ //关闭事件
+		            //先关闭二级弹出框，再关闭一级弹出框;
+			 		choose_diag.close();
+			    	top.Dialog.close();
+				 };
+				choose_diag.show();
+			});
 		});
 		
 		//导出excel

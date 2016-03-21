@@ -1,20 +1,22 @@
 package com.ssic.cookbook.manager.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ssic.cookbook.base.BaseTestCase;
 import com.ssic.cookbook.manager.dto.FixingsResultDto;
 import com.ssic.cookbook.manager.mapper.FixingsResultMapper;
 import com.ssic.cookbook.manager.pojo.FixingsResult;
 import com.ssic.cookbook.manager.pojo.FixingsResultExample;
 import com.ssic.cookbook.manager.util.CookbookFields;
 import com.ssic.util.BeanUtils;
+import com.ssic.util.StringUtils;
+import com.ssic.util.constants.DataStatus;
 
 @Repository
-public class FixingsResultDao{
+public class FixingsResultDao   {
 
 	
 	@Autowired
@@ -53,6 +55,32 @@ public class FixingsResultDao{
 			throw new RuntimeException("新增FixingsResult数据发生异常");
 		}
 		return flag;
+	}
+
+	/**
+	 * @author YIn
+	 * @time:2016年3月21日 下午3:21:13
+	 */
+	public Integer updateFixingsResult(FixingsResult fixingsResult) {
+		return mapper.updateByPrimaryKeySelective(fixingsResult);
+	}
+
+	/**
+	 * @author YIn
+	 * @time:2016年3月21日 下午3:28:20
+	 */
+	public FixingsResult findFixingsResultById(FixingsResult fixingsResult) {
+        FixingsResultExample example = new FixingsResultExample();
+        FixingsResultExample.Criteria criteria = example.createCriteria();
+        if (StringUtils.isNotBlank(fixingsResult.getId())) {
+            criteria.andIdEqualTo(fixingsResult.getId());
+        }
+        criteria.andStatEqualTo(DataStatus.ENABLED);
+        List<FixingsResult> list = mapper.selectByExample(example);
+		if(list != null && list.size() > 0){
+			return list.get(0);
+		}
+		return null;
 	}
 }
 

@@ -141,6 +141,9 @@ public class SmartController extends BaseController {
     @Autowired
     private PageFunction pageFunction;  
     
+    @Autowired
+    private IFixingsResultService fixingsResultService;
+    
 /*    @Autowired
     private MenuGenService menuGenService;  */
 

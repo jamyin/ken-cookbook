@@ -6,8 +6,6 @@ import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +14,7 @@ import com.ssic.cookbook.manager.dao.CategoryDao;
 import com.ssic.cookbook.manager.dao.ColorDao;
 import com.ssic.cookbook.manager.dao.CuisineDao;
 import com.ssic.cookbook.manager.dao.FixingsMasterDao;
+import com.ssic.cookbook.manager.dao.FixingsResultDao;
 import com.ssic.cookbook.manager.dao.IntelligentFixingsDao;
 import com.ssic.cookbook.manager.dao.NutritionDao;
 import com.ssic.cookbook.manager.dao.ShapeDao;
@@ -32,6 +31,7 @@ import com.ssic.cookbook.manager.dto.SmartNutritionDto;
 import com.ssic.cookbook.manager.dto.SmartResultDto;
 import com.ssic.cookbook.manager.dto.StyleDto;
 import com.ssic.cookbook.manager.dto.TasteDto;
+import com.ssic.cookbook.manager.pojo.FixingsResult;
 import com.ssic.cookbook.manager.pojo.IntelligentFixings;
 import com.ssic.cookbook.manager.pojo.IntelligentFixingsCategory;
 import com.ssic.cookbook.manager.pojo.IntelligentFixingsColor;
@@ -51,6 +51,9 @@ public class IntelligentFixingsServiceImpl implements IIntelligentFixingsService
         
         @Autowired
         private FixingsMasterDao fixingsMasterDao;
+        
+        @Autowired
+        private FixingsResultDao fixingsResultDao;
         
         @Autowired
         private NutritionDao nutritionDao;
@@ -189,15 +192,17 @@ public class IntelligentFixingsServiceImpl implements IIntelligentFixingsService
         		SmartResultDto smartResultDto = new SmartResultDto();
         		smartResultDto.setProductId(id);
         		smartResultDto.setSmartId(dto.getId());
+        		
+        		//FixingsResult 表里面插入智能配菜Id
+        		FixingsResult fixingsResult =new FixingsResult();
+        		fixingsResult.setId(id);
+        		fixingsResult.setFixingsId(dto.getId());
+        		fixingsResultDao.updateFixingsResult(fixingsResult);
         		return smartResultDto;
         	}
 			return null;
 		}
 
-        /**
-		 * @author YIn
-		 * @time:2016年1月4日 上午9:51:19
-		 */
 		public List<IntelligentFixingsDto> findSmart(IntelligentFixingsDto dto) {
 			//设置查询条件
 			dto.setStat(1);   //有效
@@ -238,10 +243,6 @@ public class IntelligentFixingsServiceImpl implements IIntelligentFixingsService
 			return result;
 		}
 
-		/**
-		 * @author YIn
-		 * @time:2016年1月12日 上午9:40:32
-		 */
 		public int findCount(IntelligentFixingsDto dto) {
 			//设置查询条件
 			dto.setStat(1);   //有效

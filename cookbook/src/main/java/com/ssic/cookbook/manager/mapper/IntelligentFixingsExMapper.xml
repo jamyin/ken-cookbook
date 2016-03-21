@@ -5,10 +5,10 @@
  <select id="findIntelligentFixings" parameterType="com.ssic.cookbook.manager.dto.IntelligentFixingsDto" resultType="com.ssic.cookbook.manager.dto.IntelligentFixingsDto">
 	SELECT a.id,a.set_meal_name as setMealName,a.fixings_master_id as fixingsMasterId,a.lunch_count as lunchCount,a.dinner_count as dinnerCount,a.total_cost_operator as totalCostOperator,a.total_cost as totalCost,
 	a.total_fixed_price_operator as totalFixedPriceOperator,a.total_fixed_price as totalFixedPrice,a.is_sensitive_ingredients as isSensitiveIngredients,a.fixings_start_time as fixingsStartTime,a.fixings_end_time as fixingsEndTime,a.create_time as createTime,
-	a.last_update_time as lastUpdateTime,a.stat,b.fixings_name as fixingsName,b.fixings_type  as fixingsType  
+	a.last_update_time as lastUpdateTime,a.stat,b.fixings_name as fixingsName,b.fixings_type  as fixingsType ,c.id as productId  
 	FROM  t_cb_intelligent_fixings a  
-	LEFT JOIN t_cb_fixings_master b  
-	ON a.fixings_master_id = b.id   
+	LEFT JOIN t_cb_fixings_master b ON a.fixings_master_id = b.id 
+	LEFT JOIN t_cb_fixings_result c ON a.id = c.fixings_id
 	WHERE 
 	<include refid="whererInfo"></include>
 	<include refid="Order_Clause"></include>

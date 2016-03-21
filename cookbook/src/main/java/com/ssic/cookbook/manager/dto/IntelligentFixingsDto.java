@@ -274,5 +274,10 @@ public class IntelligentFixingsDto  implements Serializable {
 	@Getter
 	@Setter
 	private int totalPage;
+	
+	@Getter
+	@Setter
+	private String productId;
+	
 
 }

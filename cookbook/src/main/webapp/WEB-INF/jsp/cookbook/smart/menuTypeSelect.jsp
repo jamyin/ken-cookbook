@@ -39,17 +39,16 @@
 <body>
 	<div id="zhongxin">
 		<div>
-			<h2>名称：<input type="text" name="menuName" id="menuName"
+			<font size="4" face="Verdana">名称：</font><input type="text" name="menuName" id="menuName"
 				value="${pd.menuName}" placeholder="这里输入配菜名称" title="配菜名称"
-				 class="isnull" message="配菜名称不能为空" /></h2>
+				 class="isnull" message="配菜名称不能为空" />
 		</div>
 		<div>
 			<h3 style="text-align: center;color: pink">配菜方式</h3>
 		</div>
-		<div>
-			&nbsp;&nbsp;&nbsp;&nbsp;
+		<div style="text-align: center;">
 			<button class="btn btn-large" type="button" onclick="add(1)">自主配菜</button>
-			&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;
 			<button class="btn btn-large" type="button" onclick="add(2)">智能配菜</button>
 			<!-- <button class="btn btn-large" type="button" onclick="add(3)">指定套餐</button> -->
 		</div>

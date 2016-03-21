@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ssic.cookbook.admin.entity.Page;
 import com.ssic.cookbook.manager.dto.FixingsResultDto;
+import com.ssic.cookbook.manager.pojo.FixingsResult;
 
 public interface IFixingsResultService {
 
@@ -28,6 +29,23 @@ public interface IFixingsResultService {
 	 */
 	public Integer findFixingsResultCount();
 	
+	/**
+	 * 更新
+	 * @author YIn
+	 * @time:2016年3月21日 下午3:18:43
+	 * @param dto
+	 * @return
+	 */
+	public Integer updateFixingsResult(FixingsResultDto dto);
+	
+	/**
+	 * 根据Id查询
+	 * @author YIn
+	 * @time:2016年3月21日 下午3:18:43
+	 * @param dto
+	 * @return
+	 */
+	public FixingsResult findFixingsResultById(FixingsResultDto dto);
 	
 }
 
